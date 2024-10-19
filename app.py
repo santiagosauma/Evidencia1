@@ -15,8 +15,6 @@ st.markdown("Luis Santiago Sauma Peñaloza A00836418")
 
 text1 = ""
 text2 = ""
-clean_text1 = ""
-clean_text2 = ""
 
 def clean_text(text):
     return re.sub(r'[^\w\s]', '', text)
@@ -34,14 +32,12 @@ if uploaded_files:
     if len(uploaded_files) >= 1:
         text1 = uploaded_files[0].read().decode("utf-8")
         text1 = st.text_area("Contenido del primer archivo", text1, height=200)
-        clean_text1 = clean_text(text1)
-        for word in clean_text1.split():
-            trie.insert(word)
+        for word in text1.split():
+            trie.insert(clean_text(word))
 
     if len(uploaded_files) == 2:
         text2 = uploaded_files[1].read().decode("utf-8")
         text2 = st.text_area("Contenido del segundo archivo", text2, height=200)
-        clean_text2 = clean_text(text2)
 
 if 'active_window' not in st.session_state:
     st.session_state['active_window'] = None
@@ -64,7 +60,7 @@ with col1:
         st.session_state['active_window'] = 'buscar'
 
 with col2:
-    if clean_text1 and clean_text2:
+    if text1 and text2:
         if st.button("Similitud"):
             st.session_state['active_window'] = 'similitud'
     else:
@@ -120,8 +116,8 @@ if st.session_state['active_window'] == 'buscar':
 
 if st.session_state['active_window'] == 'similitud':
     st.subheader("Similitud entre dos textos")
-    if clean_text1 and clean_text2:
-        common_substrings = lcs(clean_text1, clean_text2)
+    if text1 and text2:
+        common_substrings = lcs(text1, text2)
         if common_substrings:
             highlighted_text1 = text1
             highlighted_text2 = text2
@@ -136,7 +132,7 @@ if st.session_state['active_window'] == 'similitud':
 
 if st.session_state['active_window'] == 'palindromo':
     st.subheader("Palíndromo más largo")
-    palindromo = manacher(clean_text1)
+    palindromo = manacher(text1)
     
     if palindromo:
         start_index = text1.find(palindromo)
