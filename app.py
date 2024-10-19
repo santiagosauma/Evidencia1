@@ -24,7 +24,7 @@ def clean_text(text):
 def highlight_single_pattern(text, start, pattern):
     end = start + len(pattern)
     highlighted_text = (
-        text[:start] + f"<span style='background-color: yellow'>{text[start:end]}</span>" + text[end:]
+        text[:start] + f"<span style='background-color: yellow; color: black'>{text[start:end]}</span>" + text[end:]
     )
     return highlighted_text
 
@@ -126,8 +126,8 @@ if st.session_state['active_window'] == 'similitud':
             highlighted_text1 = text1
             highlighted_text2 = text2
             for substring in common_substrings:
-                highlighted_text1 = highlighted_text1.replace(substring, f"<span style='background-color: lightblue'>{substring}</span>")
-                highlighted_text2 = highlighted_text2.replace(substring, f"<span style='background-color: lightblue'>{substring}</span>")
+                highlighted_text1 = highlighted_text1.replace(substring, f"<span style='background-color: lightblue; color: black'>{substring}</span>")
+                highlighted_text2 = highlighted_text2.replace(substring, f"<span style='background-color: lightblue; color: black'>{substring}</span>")
             st.markdown(f"**Subcadena(s) común más larga:** {', '.join(common_substrings)}")
             st.markdown(f"**Texto 1:** {highlighted_text1}", unsafe_allow_html=True)
             st.markdown(f"**Texto 2:** {highlighted_text2}", unsafe_allow_html=True)
@@ -142,7 +142,7 @@ if st.session_state['active_window'] == 'palindromo':
         start_index = text1.find(palindromo)
         if start_index != -1:
             highlighted_text = (text1[:start_index] + 
-                                f"<span style='background-color: lightgreen'>{palindromo}</span>" + 
+                                f"<span style='background-color: lightgreen; color: black'>{palindromo}</span>" + 
                                 text1[start_index + len(palindromo):])
             st.markdown(highlighted_text, unsafe_allow_html=True)
         else:
